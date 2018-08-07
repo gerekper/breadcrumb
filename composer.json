@@ -1,0 +1,20 @@
+{
+    "name": "devnull/main",
+    "description": "Enable the integration of all Gerekper.asia.modules in OctoberCMS",
+    "homepage": "http://www.gerekper.asia",
+    "keywords": ["octobercms", "main", "main-body", "aisa", "gerekper"],
+    "authors": [{
+      "name": "devnull / Richard Irwan Shah",
+      "email": "richard.irwanshah@gmail.com"
+    }],
+    "require": {
+      "owl/hasmany": "~1.0@dev",
+      "react/promise": "^2.0@dev",
+      "ngfw/recipe": "~1.1.6"
+    },
+    "autoload": {
+      "psr-4": {
+        "ngfw\\": "src/ngfw/"
+      }
+    }
+}

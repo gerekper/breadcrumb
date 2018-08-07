@@ -1,5 +1,6 @@
 <?php namespace Devnull\Breadcrumb;
 
+use App;
 use System\Classes\PluginBase;
 use Illuminate\Foundation\AliasLoader;
 /**                _                             _
