@@ -1,0 +1,27 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+tabs:
+  fields:
+
+    use_plugin:
+      label: devnull.main::lang.settings_fields.use_plugin_label
+      type: switch
+      commentAbove: devnull.main::lang.settings_fields.use_plugin_commentAbove
+      span: auto
+      tab: Settings
+
+    use_redirect:
+      label: devnull.main::lang.settings_fields.use_redirect_label
+      type: switch
+      commentAbove: devnull.main::lang.settings_fields.use_redirect_commentAbove
+      span: auto
+      tab: Settings
+
+    use_plugin_logo:
+      label: devnull.main::lang.settings_fields.use_plugin_logo_label
+      type: switch
+      commentAbove: devnull.main::lang.settings_fields.use_plugin_logo_commentAbove
+      span: auto
+      tab: Settings

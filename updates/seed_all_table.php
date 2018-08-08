@@ -1,10 +1,13 @@
 <?php namespace Devnull\Breadcrumb\Updates;
 
 use DB;
-use Devnull\Main\Classes\InstallMain;
-use Devnull\Main\Classes\SystemSettings;
+use Devnull\Breadcrumb\Classes\InstallMain;
+use Devnull\Breadcrumb\Classes\SystemSettings;
+use Devnull\Breadcrumb\Classes\Seeding;
 use October\Rain\Database\Updates\Seeder;
 use Devnull\Breadcrumb\Models\Breadcrumb;
+use Devnull\Breadcrumb\Models\Settings;
+
 
     /**                _                             _
     __ _  ___ _ __ ___| | ___ __   ___ _ __ __ _ ___(_) __ _
@@ -49,6 +52,7 @@ class SeedAllTable extends Seeder
         $this->_main_code                   =   'devnull_main_settings';
         $this->time_now                     =   $this->installations->set_date_now();
 
+        $this->seeding                      =   new Seeding();
         $this->_main_breadcrumb             =   Breadcrumb::$_table;
         $this->_db_variables_breadcrumbs    =   SystemSettings::get_config_breadcrumbs();
 
@@ -85,7 +89,7 @@ class SeedAllTable extends Seeder
             }
             $this->installations->optimize_settings();
         }
-        SeedAllTable::setSettings($this->_all_codes);
+        self::setSettings($this->_all_codes);
     }
 
     //----------------------------------------------------------------------//
@@ -114,6 +118,47 @@ class SeedAllTable extends Seeder
         }
         $this->installations->schema_default();
         $this->installations->optimize_table(Breadcrumb::$_table);
+    }
+
+    public function setSettings($_value)
+    {
+        foreach ($_value as $_key => $_code)
+        {
+            switch (self::checkSettings($_key))
+            {
+                case TRUE:
+                    self::del_db_variables($_key);
+                    SeedAllTable::init_db_variables($_code);
+                    break;
+                case FALSE:
+                    self::init_db_variables($_code);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return TRUE;
+    }
+
+    private function checkSettings($_value)
+    {
+        $_checkSettings = DB::table(Settings::$_table)->where('item', '=', $_value)->pluck('item');
+        return ($_checkSettings)? TRUE : FALSE;
+    }
+
+    private function init_db_variables($_value)
+    {
+        foreach ($_value as $_per_value)
+        {
+            DB::table(Settings::$_table)->insert($_per_value);
+        }
+        //$this->installations->optimize_table(Settings::$_table);
+        return TRUE;
+    }
+
+    private function del_db_variables($_value)
+    {
+        DB::table(Settings::$_table)->where('item', '=', $_value)->delete();
     }
 
     //----------------------------------------------------------------------//

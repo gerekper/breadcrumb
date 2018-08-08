@@ -6,8 +6,8 @@ use Devnull\Main\Classes\Seeding;
 
 class Breadcrumb extends Model
 {
-	public $table           =   'gp_main_breadcrumbs';
-	public static $_table   =   'gp_main_breadcrumbs';
+	public $table           =   'gp_breadcrumb_breadcrumbs';
+	public static $_table   =   'gp_breadcrumb_breadcrumbs';
 
 	protected $primaryKey   =   'id';
 	public $timestamps      =   true;

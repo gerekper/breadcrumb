@@ -1,9 +1,9 @@
 <?php namespace Devnull\Breadcrumbs\Updates;
 
 use DB, Schema;
-use Devnull\Main\Classes\InstallMain;
+use Devnull\Breadcrumb\Classes\InstallMain;
 use October\Rain\Database\Updates\Migration;
-use Devnull\Main\Models\Breadcrumb;
+use Devnull\Breadcrumb\Models\Breadcrumb;
 
 /**                _                             _
 __ _  ___ _ __ ___| | ___ __   ___ _ __ __ _ ___(_) __ _
@@ -45,7 +45,7 @@ class CreateAllTable extends Migration
         $this->_table_engine                =   'InnoDB';
         $this->_breadcrumb_breadcrumbs      =   Breadcrumb::$_table;
 
-        $this->_down                        =   [$this->_main_breadcrumbs];
+        $this->_down                        =   [$this->_breadcrumb_breadcrumbs];
 
         $this->installations                =   new InstallMain();
     }
@@ -70,10 +70,10 @@ class CreateAllTable extends Migration
     //	Schema Table - Start
     //----------------------------------------------------------------------//
 
-    private function install_main_breadcrumb()
+    private function install_breadcrumb_breadcrumbs()
     {
-        $this->installations->remove_table($this->_main_breadcrumbs);
-        Schema::create($this->_main_breadcrumbs, function ($table)
+        $this->installations->remove_table($this->_breadcrumb_breadcrumbs);
+        Schema::create($this->_breadcrumb_breadcrumbs, function ($table)
         {
             $table->engine = $this->_table_engine;
             $table->increments('id')->index();
@@ -88,12 +88,12 @@ class CreateAllTable extends Migration
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
-        $this->install_main_breadcrumb_set();
+        $this->install_breadcrumb_breadcrumbs_set();
     }
 
-    private function install_main_breadcrumb_set()
+    private function install_breadcrumb_breadcrumbs_set()
     {
-        DB::Statement("ALTER TABLE `". $this->_main_breadcrumbs . "` CHANGE `type` `type` SET('_blank','_parent', '_self', '_top') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '_self';");
+        DB::Statement("ALTER TABLE `". $this->_breadcrumb_breadcrumbs . "` CHANGE `type` `type` SET('_blank','_parent', '_self', '_top') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '_self';");
     }
 
     //----------------------------------------------------------------------//

@@ -81,8 +81,8 @@ class Plugin Extends PluginBase
                 'description'   =>  'devnull.main::lang.settings.breadcrumbs_description',
                 'category'      =>  'devnull.main::lang.settings.main_category',
                 'icon'          =>  'icon-rss-square',
-                'url'           =>  Backend::url('devnull/main/settingsBreadcrumbs'),
-                'class'         =>  'Devnull\Main\Models\settingsBreadcrumbs',
+
+                'class'         =>  'Devnull\Breadcrumb\Models\settingsBreadcrumbs',
                 'keywords'      =>  'gerekper main breadcrumbs theme asia umbrella corporation',
                 'order'         =>  101,
             ]
