@@ -1,0 +1,13 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+tabs:
+  fields:
+
+    use_plugin_breadcrumbs:
+      label: devnull.main::lang.settings_fields.breadcrumbs_label
+      type: switch
+      commentAbove: devnull.main::lang.settings_fields.breadcrumbs_commentAbove
+      span: auto
+      tab: Breadcrumbs

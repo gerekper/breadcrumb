@@ -1,0 +1,21 @@
+{% if use_plugin_breadcrumbs %}
+<ul class="breadcrumb">
+    {% if (breadcrumbs.0.level1 == true) %}
+    <li><a href="{{domain}}{{ breadcrumbs.1.href }}" {% if this.page.baseFileName in breadcrumbs.1.page_baseFileName %} class="active" {% endif %}target="{{breadcrumbs.1.type}}"><i class="{{breadcrumbs.1.class}}"></i> {{breadcrumbs.1.page_name|_}} </a></li>
+    {% endif %}
+    {% if (breadcrumbs.0.level2 == true) %}
+    <li><a href="{{domain}}/{{ breadcrumbs.2.href }}" {% if this.page.baseFileName in breadcrumbs.2.page_baseFileName %} class="active" {% endif %} target="{{breadcrumbs.2.type}}"><i class="{{breadcrumbs.2.class}}"></i> {{breadcrumbs.2.page_name|_}} </a></li>
+    {% endif %}
+    {% if (breadcrumbs.0.level3 == true)  %}
+    <li><a href="{{domain}}/{{ breadcrumbs.3.href }}" {% if this.page.baseFileName in breadcrumbs.3.page_baseFileName %} class="active" {% endif %} target="{{breadcrumbs.3.type}}"><i class="{{breadcrumbs.3.class}}"></i> {{breadcrumbs.3.page_name|_}} </a></li>
+    {% endif %}
+    {% if (breadcrumbs.0.level4 == true) %}
+    <li><a href="{{domain}}/{{ breadcrumbs.4.href }}" {% if this.page.baseFileName in breadcrumbs.4.page_baseFileName %} class="active" {% endif %}target="{{breadcrumbs.4.type}}"><i class="{{breadcrumbs.4.class}}"></i> {{breadcrumbs.4.page_name|_}} </a></li>
+    {% endif %}
+</ul>
+{% else %}
+<ul class="breadcrumb">
+    <li> what the fuck is going </li>
+    <li> like shit this is1111111 </li>
+</ul>
+{% endif %}

@@ -63,7 +63,7 @@ class Plugin Extends PluginBase
         $alias = AliasLoader::getInstance();
         $alias->alias('Breadcrumb', 'Devnull\Breadcrumb\Facades\Breadcrumb');
 
-        App::singtelon('breadcrumb.breadcrumbs', function(){
+        App::singleton('breadcrumb.breadcrumbs', function(){
             return \Devnull\Breadcrumb\Classes\Breadcrumbs::instance();
         });
     }

@@ -1,0 +1,85 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+  page_name:
+    label: devnull.main::lang.breadcrumbs.column_page_name_label
+    type: text
+    searchable: true
+    sortable: true
+    hidden: false
+    invisible: false
+    width: auto
+
+  page_child:
+    label: devnull.main::lang.breadcrumbs.column_page_child_label
+    type: text
+    searchable: true
+    sortable: true
+    hidden: false
+    invisible: false
+    width: auto
+
+  page_baseFileName:
+    label: devnull.main::lang.breadcrumbs.column_page_baseFileName_label
+    type: text
+    searchable: true
+    sortable: true
+    hidden: false
+    invisible: false
+    width: auto
+
+  class:
+    label: devnull.main::lang.breadcrumbs.column_class_label
+    type: text
+    searchable: true
+    sortable: true
+    hidden: false
+    invisible: false
+    width: auto
+
+  href:
+    label: devnull.main::lang.breadcrumbs.column_href_label
+    type: text
+    searchable: true
+    sortable: true
+    hidden: false
+    invisible: false
+    width: auto
+
+  type:
+    label: devnull.main::lang.breadcrumbs.column_type_label
+    type: text
+    searchable: true
+    sortable: true
+    hidden: false
+    invisible: false
+    width: auto
+
+  hide:
+    label: devnull.main::lang.breadcrumbs.column_hide_label
+    type: text
+    searchable: true
+    sortable: true
+    hidden: false
+    invisible: false
+    width: auto
+
+  disabled:
+    label: devnull.main::lang.breadcrumbs.column_disabled_label
+    type: text
+    searchable: true
+    sortable: true
+    hidden: false
+    invisible: false
+    width: auto
+
+  status:
+    label: devnull.main::lang.breadcrumbs.column_status_label
+    type: text
+    searchable: true
+    sortable: true
+    hidden: false
+    invisible: false
+    width: auto
