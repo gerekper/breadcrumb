@@ -2,10 +2,9 @@
 
 use DB;
 use Devnull\Main\Classes\InstallMain;
-use Devnull\Breadcrumb\Models\Setting;
+use Devnull\Main\Classes\SystemSettings;
 use October\Rain\Database\Updates\Seeder;
 use Devnull\Breadcrumb\Models\Breadcrumb;
-use Symfony\Component\Validator\Constraints\True;
 
     /**                _                             _
     __ _  ___ _ __ ___| | ___ __   ___ _ __ __ _ ___(_) __ _
@@ -44,18 +43,21 @@ class SeedAllTable extends Seeder
 
     function __construct()
     {
-        $this->_schema              =   [];
-        $this->installations        =   new InstallMain();
-        $this->_system_settings     =   'system_settings';
-        $this->_main_code           =   'devnull_main_settings';
-        $this->time_now             =   $this->installations->set_date_now();
+        $this->_schema                      =   [];
+        $this->installations                =   new InstallMain();
+        $this->_system_settings             =   'system_settings';
+        $this->_main_code                   =   'devnull_main_settings';
+        $this->time_now                     =   $this->installations->set_date_now();
 
-        $this->_db_default          =   "{\"use_plugin\":\"1\",\"use_plugin_breadcrumbs\":\"1\"}";
-        $this->_db_variables        =   ['item' => $this->_main_code, 'value' => $this->_db_default];
+        $this->_main_breadcrumb             =   Breadcrumb::$_table;
+        $this->_db_variables_breadcrumbs    =   SystemSettings::get_config_breadcrumbs();
 
-        $this->_main_breadcrumb     =   Breadcrumb::$_table;
+        $this->_all_tables                  =   [$this->_main_breadcrumb];
+        $this->_all_config                  =   [$this->_db_variables_breadcrumbs];
 
-        $this->_all_tables          =   [ $this->_main_breadcrumb ];
+        $this->_all_codes = [
+            SystemSettings::get_breadcrumbs_code()  =>  $this->_db_variables_breadcrumbs,
+        ];
     }
 
     //----------------------------------------------------------------------//
@@ -66,11 +68,7 @@ class SeedAllTable extends Seeder
     //	Main Functions - Start
     //----------------------------------------------------------------------//
 
-    public function run() {$this->run_all_seed();}
-
-    //----------------------------------------------------------------------//
-    //	Shared Functions - Start
-    //----------------------------------------------------------------------//
+    public function run() { $this->run_all_seed(); }
 
     private function run_all_seed()
     {
@@ -80,40 +78,14 @@ class SeedAllTable extends Seeder
             switch($_all_tables)
             {
                 case $this->_main_breadcrumb:
-                    $this->schema_breadcrumb();
+                    SeedAllTable::init_schema_breadcrumbs();
                     break;
                 default:
                     break;
             }
             $this->installations->optimize_settings();
         }
-        SeedAllTable::setSettings(TRUE);
-    }
-
-    public function setSettings($_value)
-    {
-        $_setSettings = null;
-
-        if ($_value == TRUE) {
-            if (SeedAllTable::checkSettings() == TRUE) { DB::table(Setting::$_table)->insert($this->_db_variables);}
-            else {
-                DB::table(Setting::$_table)->where('item', '=', $this->_main_code)->delete();
-                DB::table(Setting::$_table)->insert($this->_db_variables);
-            }
-            $_setSettings = TRUE;
-        }
-        else {
-            if (!DB::table(Setting::$_table)->where('item', '=', $this->_main_code)->fetch())
-                DB::table(Setting::$_table)->where('item,', '=', $this->_main_code)->delete();
-            $_setSettings = FALSE;
-        }
-        return $_setSettings;
-    }
-
-    private function checkSettings()
-    {
-        $_checkSettings = DB::table(Setting::$_table)->where('item', '=', $this->_main_code)->pluck('item');
-        return (!$_checkSettings)? false : true;
+        SeedAllTable::setSettings($this->_all_codes);
     }
 
     //----------------------------------------------------------------------//
@@ -121,25 +93,12 @@ class SeedAllTable extends Seeder
     //----------------------------------------------------------------------//
 
     //----------------------------------------------------------------------//
-    //	Seed Schema Tables - Start
+    //	Seed Functions - Start
     //----------------------------------------------------------------------//
 
-    private function schema_breadcrumb()
+    private function init_schema_breadcrumbs()
     {
-        $this->_schema = [
-            ['page_name' => 'Home',                 'page_child' => '0',        'page_baseFileName' => 'home',                  'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-home',      'type' => '_self', 'href' => '',                              'status' => '1'],
-            ['page_name' => 'Dashboard',            'page_child' => 'home',     'page_baseFileName' => 'dashboard',             'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-desktop',   'type' => '_self', 'href' => 'admin/dashboard',              'status' => '1'],
-            ['page_name' => 'Policy',               'page_child' => 'home',     'page_baseFileName' => 'policy',                'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-cupboard',  'type' => '_self', 'href' => 'policy',                       'status' => '1'],
-            ['page_name' => 'Privacy Policy',       'page_child' => 'policy',   'page_baseFileName' => 'privacy-policy',        'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-note',      'type' => '_self', 'href' => 'policy/privacy',               'status' => '1'],
-            ['page_name' => 'Cookies Policy',       'page_child' => 'policy',   'page_baseFileName' => 'cookies-policy',        'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-note',      'type' => '_self', 'href' => 'policy/cookies',               'status' => '1'],
-            ['page_name' => 'Accessibility Policy', 'page_child' => 'policy',   'page_baseFileName' => 'accessibility-policy',  'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-note',      'type' => '_self', 'href' => 'policy/accessibility',         'status' => '1'],
-            ['page_name' => 'FAQ',                  'page_child' => 'home',     'page_baseFileName' => 'faq',                   'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-search',    'type' => '_self', 'href' => 'frequently-asked-questions',   'status' => '1'],
-            ['page_name' => 'Key Terms',            'page_child' => 'home',     'page_baseFileName' => 'key-terms',             'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-note',      'type' => '_self', 'href' => 'key-terms',                    'status' => '1'],
-            ['page_name' => 'Jobs',                 'page_child' => 'home',     'page_baseFileName' => 'jobs',                  'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-search',    'type' => '_self', 'href' => 'jobs',                         'status' => '1'],
-            ['page_name' => 'News Room',            'page_child' => 'home',     'page_baseFileName' => 'terms-of-use',          'hide' => '0', 'disabled' => '0', 'class' => 'pg pg-layouts3',  'type' => '_self', 'href' => 'newsroom',                     'status' => '1']
-        ];
-
-        foreach($this->_schema as $_schema)
+        foreach($this->seeding->get_schema_breadcrumbs() as $_schema)
         {
             Breadcrumb::updateOrCreate([
                 'page_name'         =>  $_schema['page_name'],
@@ -152,13 +111,12 @@ class SeedAllTable extends Seeder
                 'href'              =>  $_schema['href'],
                 'status'            =>  $_schema['status']
             ]);
-            $this->installations->schema_default();
         }
+        $this->installations->schema_default();
+        $this->installations->optimize_table(Breadcrumb::$_table);
     }
 
     //----------------------------------------------------------------------//
     //	Seed Function Tables - End
     //----------------------------------------------------------------------//
-
-
 }

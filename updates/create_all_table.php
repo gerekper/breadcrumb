@@ -1,4 +1,4 @@
-<?php namespace Devnull\Main\Updates;
+<?php namespace Devnull\Breadcrumbs\Updates;
 
 use DB, Schema;
 use Devnull\Main\Classes\InstallMain;
@@ -42,13 +42,12 @@ class CreateAllTable extends Migration
 
     function __construct()
     {
-        $this->_table_engine        =   'InnoDB';
-        $this->_main_breadcrumbs    =   Breadcrumb::$_table;
-        $this->_main_testing        =   'gp_main_testing';
+        $this->_table_engine                =   'InnoDB';
+        $this->_breadcrumb_breadcrumbs      =   Breadcrumb::$_table;
 
-        $this->_down =  [$this->_main_breadcrumbs];
+        $this->_down                        =   [$this->_main_breadcrumbs];
 
-        $this->installations          =   new InstallMain();
+        $this->installations                =   new InstallMain();
     }
 
     //----------------------------------------------------------------------//
@@ -62,7 +61,7 @@ class CreateAllTable extends Migration
     public function up()
     {
         $this->down($this->_down);
-        $this->install_main_breadcrumb();
+        $this->install_breadcrumb_breadcrumbs();
     }
 
     public function down() {foreach($this->_down as $_downing){$this->installations->remove_table($_downing);}}
